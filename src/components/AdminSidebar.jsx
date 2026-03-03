@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AdminSidebar = ({ isExpanded, setIsExpanded }) => {
   const location = useLocation();
@@ -12,12 +13,11 @@ const AdminSidebar = ({ isExpanded, setIsExpanded }) => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch("/api/auth/me", {
-        credentials: "include",
+      const response = await axios.get("/api/auth/me", {
+        withCredentials: true,
       });
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.data?.user || data.user);
+      if (response.data.success) {
+        setUser(response.data.data?.user || response.data.user);
       }
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -26,9 +26,8 @@ const AdminSidebar = ({ isExpanded, setIsExpanded }) => {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
+      await axios.post("/api/auth/logout", {}, {
+        withCredentials: true,
       });
       // Clear localStorage
       localStorage.removeItem("token");

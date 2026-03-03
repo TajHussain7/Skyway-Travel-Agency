@@ -11,7 +11,7 @@ if (import.meta.env.VITE_API_URL) {
 axios.defaults.withCredentials = true;
 
 export const setupAxiosInterceptors = () => {
-  // Request interceptor to add token to headers
+  // Request interceptor - Add Authorization header from localStorage
   axios.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem("token");
@@ -22,10 +22,10 @@ export const setupAxiosInterceptors = () => {
     },
     (error) => {
       return Promise.reject(error);
-    },
+    }
   );
 
-  // Response interceptor for error handling
+  // Response interceptor - Handle errors and maintenance mode
   axios.interceptors.response.use(
     (response) => {
       return response;
@@ -41,28 +41,15 @@ export const setupAxiosInterceptors = () => {
         }
       }
 
-      // Handle 401 Unauthorized - redirect to login
+      // Handle 401 Unauthorized - clear invalid token
       if (error.response?.status === 401) {
-        const currentPath = window.location.pathname;
-        const publicPaths = [
-          "/login",
-          "/register",
-          "/",
-          "/flights",
-          "/offers",
-          "/umrah",
-          "/about",
-          "/contact",
-        ];
-
-        // Only redirect to login if not already on a public page
-        if (
-          !publicPaths.includes(currentPath) &&
-          !currentPath.startsWith("/maintenance")
-        ) {
+        const token = localStorage.getItem("token");
+        if (token) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
-          if (currentPath !== "/login") {
+          // Only redirect to login if not already on auth pages
+          const currentPath = window.location.pathname;
+          if (!currentPath.includes("/login") && !currentPath.includes("/register")) {
             window.location.href = "/login";
           }
         }
