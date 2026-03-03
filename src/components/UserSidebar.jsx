@@ -30,8 +30,14 @@ const UserSidebar = ({ isExpanded, setIsExpanded }) => {
         method: "POST",
         credentials: "include",
       });
+      // Clear localStorage
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       navigate("/login");
     } catch (error) {
+      // Clear localStorage even on error
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       navigate("/login");
     }
   };
