@@ -22,7 +22,7 @@ export const setupAxiosInterceptors = () => {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   // Response interceptor - Handle errors and maintenance mode
@@ -49,7 +49,10 @@ export const setupAxiosInterceptors = () => {
           localStorage.removeItem("user");
           // Only redirect to login if not already on auth pages
           const currentPath = window.location.pathname;
-          if (!currentPath.includes("/login") && !currentPath.includes("/register")) {
+          if (
+            !currentPath.includes("/login") &&
+            !currentPath.includes("/register")
+          ) {
             window.location.href = "/login";
           }
         }

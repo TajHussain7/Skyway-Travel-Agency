@@ -26,9 +26,13 @@ const AdminSidebar = ({ isExpanded, setIsExpanded }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/auth/logout", {}, {
-        withCredentials: true,
-      });
+      await axios.post(
+        "/api/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        },
+      );
       // Clear localStorage
       localStorage.removeItem("token");
       localStorage.removeItem("user");
