@@ -18,25 +18,17 @@ const UserLayout = ({ children }) => {
 
   const checkFeedbackRequirement = async () => {
     try {
-      console.log("🔍 Checking feedback requirement...");
-
       // Get feedback settings (public endpoint)
       const settingsResponse = await axios.get("/api/settings/feedback", {
         withCredentials: true,
       });
       const feedbackSettings = settingsResponse.data.data;
-      console.log("⚙️ Feedback settings received:", feedbackSettings);
 
       // Get user data to check feedback status
       const userResponse = await axios.get("/api/auth/me", {
         withCredentials: true,
       });
       const user = userResponse.data.user || userResponse.data.data?.user;
-      console.log("👤 User data:", {
-        role: user?.role,
-        feedbackSubmitted: user?.feedbackSubmitted,
-        email: user?.email,
-      });
 
       setUserData(user);
       setFeedbackSettings(feedbackSettings);
@@ -48,19 +40,8 @@ const UserLayout = ({ children }) => {
         user?.role === "user" &&
         !user?.feedbackSubmitted;
 
-      console.log("📋 Feedback check:", {
-        feedbackMode: feedbackSettings?.feedbackMode,
-        mandatoryForUsers: feedbackSettings?.mandatoryForUsers,
-        userRole: user?.role,
-        feedbackSubmitted: user?.feedbackSubmitted,
-        shouldShowModal,
-      });
-
       if (shouldShowModal) {
-        console.log("✅ Showing feedback modal");
         setShowFeedbackModal(true);
-      } else {
-        console.log("❌ Not showing feedback modal");
       }
 
       setLoading(false);

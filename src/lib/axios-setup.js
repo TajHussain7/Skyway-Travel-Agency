@@ -17,9 +17,6 @@ export const setupAxiosInterceptors = () => {
       const token = localStorage.getItem("token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log("✅ Token added to request:", config.url);
-      } else {
-        console.log("⚠️ No token found in localStorage for:", config.url);
       }
       return config;
     },
@@ -46,10 +43,8 @@ export const setupAxiosInterceptors = () => {
 
       // Handle 401 Unauthorized - clear invalid token
       if (error.response?.status === 401) {
-        console.log("❌ 401 Error for:", error.config?.url);
         const token = localStorage.getItem("token");
         if (token) {
-          console.log("🗑️ Clearing invalid token");
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           // Only redirect to login if not already on auth pages

@@ -99,18 +99,9 @@ const Register = () => {
       if (response.data.success) {
         // Store token and user data in localStorage
         const { token, user } = response.data.data;
-        console.log(
-          "🔑 Registration successful, storing token:",
-          token ? "✓" : "✗",
-        );
-        console.log("👤 User data:", user);
 
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-
-        // Verify token was stored
-        const storedToken = localStorage.getItem("token");
-        console.log("✅ Token stored verification:", storedToken ? "✓" : "✗");
 
         // Redirect based on user role
         setTimeout(() => {

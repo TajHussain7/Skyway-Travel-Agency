@@ -138,15 +138,6 @@ const Settings = () => {
       const category = categoryMap[settingsType] || settingsType;
       const data = settingsMap[settingsType];
 
-      console.log(
-        "Saving settings - Type:",
-        settingsType,
-        "Category:",
-        category,
-        "Data:",
-        data,
-      );
-
       // Save to API
       await axios.put(
         "/api/settings",
