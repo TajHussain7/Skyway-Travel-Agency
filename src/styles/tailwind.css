@@ -1,0 +1,426 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS for animations and special effects */
+@layer components {
+  /* Container styles */
+  .container {
+    @apply max-w-[80rem] mx-auto px-4;
+  }
+
+  .container-fluid {
+    @apply w-full px-4;
+  }
+
+  /* Button styles */
+  .btn {
+    @apply inline-block px-6 py-2 border-none rounded-md font-medium text-center cursor-pointer transition-all duration-300 relative overflow-hidden;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-primary-dark text-white hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-600 hover:bg-gray-300;
+  }
+
+  .btn-outline-primary {
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+
+  .btn-lg {
+    @apply px-8 py-3 text-lg;
+  }
+
+  .btn-sm {
+    @apply px-4 py-1 text-sm;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .card-header {
+    @apply p-6 bg-gray-50 border-b border-gray-200;
+  }
+
+  .card-body {
+    @apply p-6;
+  }
+
+  .card-footer {
+    @apply p-6 bg-gray-50 border-t border-gray-200;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold mb-2 text-gray-600;
+  }
+
+  .card-text {
+    @apply text-gray-500 mb-4;
+  }
+
+  /* Form styles */
+  .form-group {
+    @apply mb-6;
+  }
+
+  .form-label {
+    @apply block mb-2 font-medium text-gray-600;
+  }
+
+  .form-control {
+    @apply w-full px-4 py-2 border-2 border-gray-200 rounded-md text-base transition-all duration-300 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)];
+  }
+
+  .form-control::placeholder {
+    @apply text-gray-400;
+  }
+
+  .form-control.is-invalid {
+    @apply border-danger;
+  }
+
+  .form-control.is-valid {
+    @apply border-success;
+  }
+
+  /* Section styles */
+  .section {
+    @apply py-16;
+  }
+
+  .section-title {
+    @apply text-center text-4xl font-bold text-gray-600 mb-8;
+  }
+
+  .section-subtitle {
+    @apply text-justify text-lg text-gray-500 mb-8 max-w-2xl mx-auto;
+  }
+
+  /* Grid utilities */
+  .row {
+    @apply flex flex-wrap -mx-2;
+  }
+
+  .col {
+    @apply flex-1 px-2;
+  }
+
+  .col-12 {
+    @apply flex-none w-full px-2;
+  }
+
+  .col-6 {
+    @apply flex-none w-1/2 px-2;
+  }
+
+  .col-4 {
+    @apply flex-none w-1/3 px-2;
+  }
+
+  .col-3 {
+    @apply flex-none w-1/4 px-2;
+  }
+
+  /* Text utilities */
+  .text-muted {
+    @apply text-gray-500;
+  }
+
+  .text-decoration-none {
+    @apply no-underline;
+  }
+
+  /* Margin utilities */
+  .me-2 {
+    @apply mr-2;
+  }
+
+  .me-3 {
+    @apply mr-3;
+  }
+
+  /* Alignment utilities */
+  .align-items-center {
+    @apply flex items-center;
+  }
+
+  .align-items-end {
+    @apply flex items-end;
+  }
+
+  .justify-content-between {
+    @apply flex justify-between;
+  }
+
+  .justify-content-center {
+    @apply flex justify-center;
+  }
+
+  /* Dashboard layout */
+  .dashboard-container {
+    @apply flex min-h-screen;
+  }
+
+  .main-content {
+    @apply flex-1 ml-64 p-5 bg-gray-50 min-h-screen overflow-x-auto;
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      @apply ml-0 p-4;
+    }
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6;
+  }
+
+  .stat-card {
+    @apply bg-white p-6 rounded-lg shadow-md flex items-center gap-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .stat-icon {
+    @apply w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0 text-2xl;
+  }
+
+  .stat-info h3 {
+    @apply text-2xl font-bold text-gray-600;
+  }
+
+  .stat-info p {
+    @apply text-gray-500 text-sm;
+  }
+
+  /* Header styles */
+  .header {
+    @apply bg-white p-8 rounded-lg shadow-md mb-6 flex justify-between items-center;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      @apply flex-col gap-4 items-start;
+    }
+  }
+
+  .header-title h1 {
+    @apply text-3xl text-gray-600 mb-1;
+  }
+
+  .header-title p {
+    @apply text-gray-600;
+  }
+
+  .header-title span {
+    @apply text-primary;
+  }
+
+  .header-actions {
+    @apply flex gap-3 flex-wrap;
+  }
+
+  @media (max-width: 768px) {
+    .header-actions {
+      @apply flex-col w-full;
+    }
+
+    .header-actions .btn {
+      @apply justify-center;
+    }
+  }
+
+  /* Hero section */
+  .hero {
+    @apply bg-gradient-to-r from-primary to-primary-dark text-white py-16 text-center relative overflow-hidden;
+  }
+
+  .hero-content {
+    @apply relative z-10;
+  }
+
+  .hero h1 {
+    @apply text-5xl font-bold mb-4;
+  }
+
+  .hero p {
+    @apply text-xl mb-8 opacity-90;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      @apply text-2xl;
+    }
+
+    .hero p {
+      @apply text-lg;
+    }
+  }
+
+  /* Flight form styles */
+  .flight-form {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 items-end;
+  }
+
+  .flight-form .form-group {
+    @apply mb-0;
+  }
+
+  .flight-form button {
+    @apply h-auto;
+  }
+
+  @media (max-width: 768px) {
+    .flight-form {
+      @apply grid-cols-1;
+    }
+  }
+
+  /* Flight list */
+  .flight-list {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  /* Flight card */
+  .flight-card {
+    @apply bg-white rounded-lg p-6 shadow-md border border-gray-200 transition-all duration-300 relative overflow-hidden hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .flight-card::before {
+    @apply content-[''] absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary-dark;
+  }
+
+  .flight-card h3 {
+    @apply text-primary mb-4 text-xl font-semibold;
+  }
+
+  .flight-card p {
+    @apply my-2 text-gray-600 leading-relaxed;
+  }
+
+  /* Chart container */
+  .chart-container {
+    @apply bg-gray-50 p-4 rounded-lg;
+  }
+
+  /* Scroll to top button */
+  .scroll-to-top {
+    @apply fixed bottom-8 right-8 w-12 h-12 bg-primary text-white border-none rounded-full hidden items-center justify-center cursor-pointer shadow-lg transition-all duration-300 z-50 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .scroll-to-top.show {
+    @apply flex;
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.6s ease-in-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.6s ease-in-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading animation */
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--primary-color, #667eea);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Button shine effect */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .col-6 {
+    @apply w-full px-2;
+  }
+
+  .col-4 {
+    @apply w-full px-2;
+  }
+
+  .col-3 {
+    @apply w-full px-2;
+  }
+}

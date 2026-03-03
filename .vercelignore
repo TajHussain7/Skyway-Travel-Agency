@@ -1,0 +1,19 @@
+# Backend files (deployed separately on Render)
+
+api/
+
+# Environment files
+
+.env
+.env.\*
+!.env.example
+
+# Development
+
+node_modules
+.DS_Store
+\*.log
+
+# Build files
+
+dist-ssr
