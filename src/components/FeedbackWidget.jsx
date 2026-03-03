@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "/api";
-
 const FeedbackWidget = ({ onClose, userEmail, userName }) => {
   const [rating, setRating] = useState(null);
   const [message, setMessage] = useState("");
@@ -27,7 +25,7 @@ const FeedbackWidget = ({ onClose, userEmail, userName }) => {
     setError("");
 
     try {
-      const response = await axios.post(`${API_URL}/user/feedback`, {
+      const response = await axios.post("/api/user/feedback", {
         email: userEmail,
         name: userName,
         rating,
@@ -44,7 +42,7 @@ const FeedbackWidget = ({ onClose, userEmail, userName }) => {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Failed to submit feedback. Please try again."
+          "Failed to submit feedback. Please try again.",
       );
     } finally {
       setLoading(false);

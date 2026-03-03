@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
+import axios from "axios";
 import AdminLayout from "../../components/AdminLayout";
 import ConfirmModal from "../../components/ConfirmModal";
-
-const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const ManageArchive = () => {
   const [activeTab, setActiveTab] = useState("bookings");
@@ -31,12 +30,11 @@ const ManageArchive = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch(`${API_URL}/admin/archive/stats`, {
-        credentials: "include",
+      const response = await axios.get("/api/admin/archive/stats", {
+        withCredentials: true,
       });
-      if (response.ok) {
-        const data = await response.json();
-        setStats(data.data);
+      if (response.data.success) {
+        setStats(response.data.data);
       }
     } catch (error) {
       console.error("Error fetching stats:", error);
@@ -46,14 +44,13 @@ const ManageArchive = () => {
   const fetchArchivedBookings = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_URL}/admin/archive/bookings?page=${page}&limit=${pagination.limit}`,
-        { credentials: "include" },
+      const response = await axios.get(
+        `/api/admin/archive/bookings?page=${page}&limit=${pagination.limit}`,
+        { withCredentials: true },
       );
-      if (response.ok) {
-        const data = await response.json();
-        setBookings(data.data);
-        setPagination(data.pagination);
+      if (response.data.success) {
+        setBookings(response.data.data);
+        setPagination(response.data.pagination);
       }
     } catch (error) {
       console.error("Error fetching archived bookings:", error);
@@ -65,14 +62,13 @@ const ManageArchive = () => {
   const fetchArchivedFlights = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_URL}/admin/archive/flights?page=${page}&limit=${pagination.limit}`,
-        { credentials: "include" },
+      const response = await axios.get(
+        `/api/admin/archive/flights?page=${page}&limit=${pagination.limit}`,
+        { withCredentials: true },
       );
-      if (response.ok) {
-        const data = await response.json();
-        setFlights(data.data);
-        setPagination(data.pagination);
+      if (response.data.success) {
+        setFlights(response.data.data);
+        setPagination(response.data.pagination);
       }
     } catch (error) {
       console.error("Error fetching archived flights:", error);
@@ -84,18 +80,23 @@ const ManageArchive = () => {
   const runAutoArchive = async () => {
     try {
       setActionLoading("autoArchive");
-      const response = await fetch(`${API_URL}/admin/archive/run`, {
-        method: "POST",
-        credentials: "include",
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const response = await axios.post(
+        "/api/admin/archive/run",
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+      if (response.data.success) {
         showNotification("success", "Auto-archive completed successfully!");
         fetchStats();
         if (activeTab === "bookings") fetchArchivedBookings();
         else fetchArchivedFlights();
       } else {
-        showNotification("error", data.message || "Failed to run auto-archive");
+        showNotification(
+          "error",
+          response.data.message || "Failed to run auto-archive",
+        );
       }
     } catch (error) {
       showNotification("error", "Error running auto-archive");
@@ -171,17 +172,15 @@ const ManageArchive = () => {
         archivedReason: null,
       };
 
-      const response = await fetch(
-        `${API_URL}/admin/flights/${selectedFlight._id}`,
+      const response = await axios.put(
+        `/api/admin/flights/${selectedFlight._id}`,
+        updateData,
         {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(updateData),
+          withCredentials: true,
         },
       );
 
-      if (response.ok) {
+      if (response.data.success) {
         showNotification(
           "success",
           "Flight updated and restored successfully!",
@@ -190,8 +189,10 @@ const ManageArchive = () => {
         fetchArchivedFlights(pagination.page);
         fetchStats();
       } else {
-        const data = await response.json();
-        showNotification("error", data.message || "Failed to update flight");
+        showNotification(
+          "error",
+          response.data.message || "Failed to update flight",
+        );
       }
     } catch (error) {
       console.error("Error updating flight:", error);
@@ -204,14 +205,13 @@ const ManageArchive = () => {
   const fetchArchivedUsers = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_URL}/admin/archive/users?page=${page}&limit=${pagination.limit}`,
-        { credentials: "include" },
+      const response = await axios.get(
+        `/api/admin/archive/users?page=${page}&limit=${pagination.limit}`,
+        { withCredentials: true },
       );
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data.data);
-        setPagination(data.pagination);
+      if (response.data.success) {
+        setUsers(response.data.data);
+        setPagination(response.data.pagination);
       }
     } catch (error) {
       console.error("Error fetching archived users:", error);
@@ -223,14 +223,13 @@ const ManageArchive = () => {
   const fetchFeedback = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_URL}/admin/archive/feedback?page=${page}&limit=${pagination.limit}`,
-        { credentials: "include" },
+      const response = await axios.get(
+        `/api/admin/archive/feedback?page=${page}&limit=${pagination.limit}`,
+        { withCredentials: true },
       );
-      if (response.ok) {
-        const data = await response.json();
-        setFeedback(data.data);
-        setPagination(data.pagination);
+      if (response.data.success) {
+        setFeedback(response.data.data);
+        setPagination(response.data.pagination);
       }
     } catch (error) {
       console.error("Error fetching feedback:", error);
@@ -242,14 +241,13 @@ const ManageArchive = () => {
   const fetchContactQueries = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_URL}/admin/archive/contact-queries?page=${page}&limit=${pagination.limit}`,
-        { credentials: "include" },
+      const response = await axios.get(
+        `/api/admin/archive/contact-queries?page=${page}&limit=${pagination.limit}`,
+        { withCredentials: true },
       );
-      if (response.ok) {
-        const data = await response.json();
-        setContactQueries(data.data);
-        setPagination(data.pagination);
+      if (response.data.success) {
+        setContactQueries(response.data.data);
+        setPagination(response.data.pagination);
       }
     } catch (error) {
       console.error("Error fetching contact queries:", error);
@@ -261,11 +259,10 @@ const ManageArchive = () => {
   const restoreUser = async (id) => {
     try {
       setActionLoading(id);
-      const response = await fetch(`${API_URL}/admin/archive/user/${id}`, {
-        method: "DELETE",
-        credentials: "include",
+      const response = await axios.delete(`/api/admin/archive/user/${id}`, {
+        withCredentials: true,
       });
-      if (response.ok) {
+      if (response.data.success) {
         showNotification("success", "User account restored successfully!");
         fetchArchivedUsers(pagination.page);
         fetchStats();
@@ -285,14 +282,13 @@ const ManageArchive = () => {
     }
     try {
       setActionLoading(id);
-      const response = await fetch(
-        `${API_URL}/admin/archive/user/${id}/permanent`,
+      const response = await axios.delete(
+        `/api/admin/archive/user/${id}/permanent`,
         {
-          method: "DELETE",
-          credentials: "include",
+          withCredentials: true,
         },
       );
-      if (response.ok) {
+      if (response.data.success) {
         showNotification("success", "User deleted permanently!");
         fetchArchivedUsers(pagination.page);
         fetchStats();
@@ -309,13 +305,14 @@ const ManageArchive = () => {
   const updateFeedbackStatus = async (id, status) => {
     try {
       setActionLoading(id);
-      const response = await fetch(`${API_URL}/admin/archive/feedback/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ status }),
-      });
-      if (response.ok) {
+      const response = await axios.put(
+        `/api/admin/archive/feedback/${id}`,
+        { status },
+        {
+          withCredentials: true,
+        },
+      );
+      if (response.data.success) {
         showNotification("success", "Feedback status updated!");
         fetchFeedback(pagination.page);
       } else {
@@ -331,16 +328,14 @@ const ManageArchive = () => {
   const updateQueryStatus = async (id, status) => {
     try {
       setActionLoading(id);
-      const response = await fetch(
-        `${API_URL}/admin/archive/contact-queries/${id}`,
+      const response = await axios.put(
+        `/api/admin/archive/contact-queries/${id}`,
+        { status },
         {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ status }),
+          withCredentials: true,
         },
       );
-      if (response.ok) {
+      if (response.data.success) {
         showNotification("success", "Query status updated!");
         fetchContactQueries(pagination.page);
         setShowQueryModal(false);
@@ -362,25 +357,24 @@ const ManageArchive = () => {
 
     try {
       setSendingResponse(true);
-      const response = await fetch(
-        `${API_URL}/admin/archive/contact-queries/${selectedQuery._id}/respond`,
+      const response = await axios.post(
+        `/api/admin/archive/contact-queries/${selectedQuery._id}/respond`,
+        { response: queryResponse },
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ response: queryResponse }),
+          withCredentials: true,
         },
       );
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.data.success) {
         showNotification("success", "Response sent successfully!");
         setQueryResponse("");
         setShowQueryModal(false);
         fetchContactQueries(pagination.page);
       } else {
-        showNotification("error", data.message || "Failed to send response");
+        showNotification(
+          "error",
+          response.data.message || "Failed to send response",
+        );
       }
     } catch (error) {
       console.error("Error sending response:", error);
@@ -413,16 +407,15 @@ const ManageArchive = () => {
 
     try {
       setActionLoading(`clear-${section}`);
-      const response = await fetch(
-        `${API_URL}/admin/archive/clear/${section}`,
+      const response = await axios.delete(
+        `/api/admin/archive/clear/${section}`,
         {
-          method: "DELETE",
-          credentials: "include",
+          withCredentials: true,
         },
       );
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response.data.success) {
+        const data = response.data;
         showNotification(
           "success",
           `${data.message} (${data.deletedCount} items deleted)`,

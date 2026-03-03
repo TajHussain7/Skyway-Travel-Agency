@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
+import axios from "axios";
 import UserLayout from "../../components/UserLayout";
-
-const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const PastBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -18,20 +17,15 @@ const PastBookings = () => {
   const fetchPastBookings = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_URL}/booking/user/past-bookings?page=${page}&limit=${pagination.limit}`,
+      const response = await axios.get(
+        `/api/booking/user/past-bookings?page=${page}&limit=${pagination.limit}`,
         {
-          credentials: "include",
-        }
+          withCredentials: true,
+        },
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch past bookings");
-      }
-
-      const data = await response.json();
-      setBookings(data.data);
-      setPagination(data.pagination);
+      setBookings(response.data.data);
+      setPagination(response.data.pagination);
     } catch (err) {
       setError(err.message);
     } finally {

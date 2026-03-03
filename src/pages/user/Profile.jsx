@@ -98,14 +98,14 @@ const Profile = () => {
 
       const totalBookings = bookings.length;
       const confirmedBookings = bookings.filter(
-        (b) => b.status === "confirmed"
+        (b) => b.status === "confirmed",
       ).length;
       const totalSpent = bookings.reduce(
         (sum, b) => sum + (b.totalPrice || 0),
-        0
+        0,
       );
       const pendingBookings = bookings.filter(
-        (b) => b.status === "pending"
+        (b) => b.status === "pending",
       ).length;
 
       setStats({
@@ -179,7 +179,7 @@ const Profile = () => {
         const response = await axios.put(
           "/api/user/profile",
           { ...formData, profileImage: base64Image },
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         if (response.data.success) {
@@ -214,7 +214,7 @@ const Profile = () => {
       const response = await axios.put(
         "/api/user/profile",
         { ...formData, profileImage: "" },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (response.data.success) {
@@ -296,12 +296,12 @@ const Profile = () => {
 
     try {
       const response = await axios.put(
-        `${API_URL}/user/change-password`,
+        "/api/user/change-password",
         {
           currentPassword: passwordData.currentPassword,
           newPassword: passwordData.newPassword,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (response.data.success) {
@@ -385,7 +385,7 @@ const Profile = () => {
       }
     } catch (error) {
       setDeleteError(
-        error.response?.data?.message || "Failed to delete account"
+        error.response?.data?.message || "Failed to delete account",
       );
     } finally {
       setDeleteLoading(false);
@@ -396,7 +396,7 @@ const Profile = () => {
     setFeedbackLoading(true);
 
     try {
-      const response = await axios.post(`${API_URL}/user/feedback`, {
+      const response = await axios.post("/api/user/feedback", {
         email: deletedUserData?.email,
         name: deletedUserData?.name,
         rating: feedbackData.rating,
