@@ -75,12 +75,9 @@ const ManageOffers = () => {
   const loadOffers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "/api/package-offers/admin/all",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("/api/package-offers/admin/all", {
+        withCredentials: true,
+      });
       if (response.data.success) {
         setOffers(response.data.data);
       }
@@ -182,11 +179,9 @@ const ManageOffers = () => {
       };
 
       if (editingOffer) {
-        await axios.put(
-          `/api/package-offers/${editingOffer._id}`,
-          submitData,
-          { withCredentials: true }
-        );
+        await axios.put(`/api/package-offers/${editingOffer._id}`, submitData, {
+          withCredentials: true,
+        });
         setNotificationModal({
           isOpen: true,
           title: "Success",
@@ -194,11 +189,9 @@ const ManageOffers = () => {
           type: "success",
         });
       } else {
-        await axios.post(
-          "/api/package-offers",
-          submitData,
-          { withCredentials: true }
-        );
+        await axios.post("/api/package-offers", submitData, {
+          withCredentials: true,
+        });
         setNotificationModal({
           isOpen: true,
           title: "Success",
@@ -270,7 +263,7 @@ const ManageOffers = () => {
       const response = await axios.patch(
         `/api/package-offers/${offerId}/toggle-visibility`,
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (response.data.success) {
@@ -304,10 +297,9 @@ const ManageOffers = () => {
       message: `Are you sure you want to delete "${offerName}"? This action cannot be undone.`,
       onConfirm: async () => {
         try {
-          await axios.delete(
-            `/api/package-offers/${offerId}`,
-            { withCredentials: true }
-          );
+          await axios.delete(`/api/package-offers/${offerId}`, {
+            withCredentials: true,
+          });
           setNotificationModal({
             isOpen: true,
             title: "Success",
@@ -552,7 +544,9 @@ const ManageOffers = () => {
                           <button
                             onClick={() =>
                               setShowActionsMenu(
-                                showActionsMenu === offer._id ? null : offer._id
+                                showActionsMenu === offer._id
+                                  ? null
+                                  : offer._id,
                               )
                             }
                             className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-200 flex items-center gap-2 mx-auto"

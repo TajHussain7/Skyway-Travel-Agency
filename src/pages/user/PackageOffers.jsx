@@ -51,9 +51,7 @@ const PackageOffers = () => {
   const loadPackageOffers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "/api/package-offers"
-      );
+      const response = await axios.get("/api/package-offers");
       if (response.data.success) {
         const offers = response.data.data;
         setPackageOffers(offers);
@@ -80,14 +78,14 @@ const PackageOffers = () => {
       filtered = filtered.filter(
         (offer) =>
           offer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          offer.description.toLowerCase().includes(searchTerm.toLowerCase())
+          offer.description.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     // Filter by category
     if (selectedCategory !== "all") {
       filtered = filtered.filter(
-        (offer) => offer.category === selectedCategory
+        (offer) => offer.category === selectedCategory,
       );
     }
 

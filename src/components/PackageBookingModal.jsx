@@ -75,7 +75,7 @@ const PackageBookingModal = ({ offer, onClose, onSuccess }) => {
       const response = await axios.post(
         "/api/booking/package/create",
         bookingData,
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (response.data.success) {
@@ -83,7 +83,7 @@ const PackageBookingModal = ({ offer, onClose, onSuccess }) => {
           `Booking created successfully! Your booking reference is ${
             response.data.data?.bookingReference ||
             "SKY-" + offer._id.slice(-8).toUpperCase()
-          }`
+          }`,
         );
         setShowToast(true);
 
@@ -275,7 +275,7 @@ const PackageBookingModal = ({ offer, onClose, onSuccess }) => {
                           handlePassengerChange(
                             index,
                             "passportNumber",
-                            e.target.value
+                            e.target.value,
                           )
                         }
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary"

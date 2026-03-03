@@ -53,12 +53,9 @@ const MyBookings = () => {
   const loadBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "/api/booking/user/my-bookings",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("/api/booking/user/my-bookings", {
+        withCredentials: true,
+      });
       const bookingsData = response.data.data || [];
 
       // Filter out archived bookings (should not happen, but safety check)
@@ -519,10 +516,10 @@ const MyBookings = () => {
                                 booking.status === "confirmed"
                                   ? "bg-green-100 text-green-800"
                                   : booking.status === "pending"
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : booking.status === "cancelled"
-                                  ? "bg-red-100 text-red-800"
-                                  : "bg-gray-100 text-gray-800"
+                                    ? "bg-yellow-100 text-yellow-800"
+                                    : booking.status === "cancelled"
+                                      ? "bg-red-100 text-red-800"
+                                      : "bg-gray-100 text-gray-800"
                               }`}
                             >
                               {booking.status
@@ -566,22 +563,22 @@ const MyBookings = () => {
                                   day: "numeric",
                                 })
                               : departureDate
-                              ? departureDate.toLocaleDateString("en-US", {
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "numeric",
-                                })
-                              : "N/A"}
+                                ? departureDate.toLocaleDateString("en-US", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  })
+                                : "N/A"}
                           </td>
                           <td className="px-4 py-4 text-gray-900">
                             {isPackage
                               ? "Package Booking"
                               : departureDate
-                              ? departureDate.toLocaleTimeString("en-US", {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })
-                              : "N/A"}
+                                ? departureDate.toLocaleTimeString("en-US", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })
+                                : "N/A"}
                           </td>
                           <td className="px-4 py-4">
                             <span className="text-gray-900">
@@ -609,7 +606,7 @@ const MyBookings = () => {
                                 year: "numeric",
                                 month: "short",
                                 day: "numeric",
-                              }
+                              },
                             )}
                           </td>
                           <td className="px-4 py-4">
@@ -763,7 +760,7 @@ const MyBookings = () => {
                             )}
                           </div>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 ) : (
