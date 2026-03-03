@@ -377,8 +377,12 @@ const ManageArchive = () => {
         );
       }
     } catch (error) {
-      console.error("Error sending response:", error);
-      showNotification("error", "Error sending response");
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Error sending response";
+      showNotification("error", errorMessage);
     } finally {
       setSendingResponse(false);
     }

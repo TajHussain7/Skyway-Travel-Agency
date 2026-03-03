@@ -634,6 +634,17 @@ router.post("/contact-queries/:id/respond", async (req, res) => {
       });
     }
 
+    // Validate email configuration
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+      return res.status(500).json({
+        success: false,
+        message:
+          "Email service is not configured. Please contact system administrator.",
+        error:
+          "EMAIL_USER and EMAIL_PASSWORD environment variables are required",
+      });
+    }
+
     // Get the contact query
     const query = await ContactQuery.findById(id);
 

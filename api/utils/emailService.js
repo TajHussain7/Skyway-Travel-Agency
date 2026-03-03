@@ -214,6 +214,13 @@ const getEmailTemplate = (name, subject, response, queryMessage) => {
 // Send response email to user
 export const sendQueryResponseEmail = async (queryData, adminResponse) => {
   try {
+    // Validate email configuration
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+      throw new Error(
+        "Email service not configured. EMAIL_USER and EMAIL_PASSWORD must be set in environment variables."
+      );
+    }
+
     const transporter = createTransporter();
 
     const mailOptions = {
@@ -232,14 +239,14 @@ export const sendQueryResponseEmail = async (queryData, adminResponse) => {
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully:", info.messageId);
     return {
       success: true,
       messageId: info.messageId,
     };
   } catch (error) {
-    console.error("Error sending email:", error);
     throw new Error(`Failed to send email: ${error.message}`);
+  }
+};
   }
 };
 
@@ -579,16 +586,11 @@ export const sendBookingNotification = async (
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(
-      `${notificationType} email sent successfully to ${userEmail}:`,
-      info.messageId,
-    );
     return {
       success: true,
       messageId: info.messageId,
     };
   } catch (error) {
-    console.error("Error sending booking notification:", error);
     throw new Error(`Failed to send booking notification: ${error.message}`);
   }
 };
@@ -598,10 +600,8 @@ export const testEmailConfig = async () => {
   try {
     const transporter = createTransporter();
     await transporter.verify();
-    console.log("Email configuration is valid");
     return true;
   } catch (error) {
-    console.error("Email configuration error:", error);
     return false;
   }
 };
