@@ -52,7 +52,7 @@ const PackageOffers = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:8080/api/package-offers"
+        "/api/package-offers"
       );
       if (response.data.success) {
         const offers = response.data.data;

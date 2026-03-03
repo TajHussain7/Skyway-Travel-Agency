@@ -76,7 +76,7 @@ const ManageOffers = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:8080/api/package-offers/admin/all",
+        "/api/package-offers/admin/all",
         {
           withCredentials: true,
         }
@@ -183,7 +183,7 @@ const ManageOffers = () => {
 
       if (editingOffer) {
         await axios.put(
-          `http://localhost:8080/api/package-offers/${editingOffer._id}`,
+          `/api/package-offers/${editingOffer._id}`,
           submitData,
           { withCredentials: true }
         );
@@ -195,7 +195,7 @@ const ManageOffers = () => {
         });
       } else {
         await axios.post(
-          "http://localhost:8080/api/package-offers",
+          "/api/package-offers",
           submitData,
           { withCredentials: true }
         );
@@ -268,7 +268,7 @@ const ManageOffers = () => {
   const toggleVisibility = async (offerId, currentVisibility) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/package-offers/${offerId}/toggle-visibility`,
+        `/api/package-offers/${offerId}/toggle-visibility`,
         {},
         { withCredentials: true }
       );
@@ -305,7 +305,7 @@ const ManageOffers = () => {
       onConfirm: async () => {
         try {
           await axios.delete(
-            `http://localhost:8080/api/package-offers/${offerId}`,
+            `/api/package-offers/${offerId}`,
             { withCredentials: true }
           );
           setNotificationModal({

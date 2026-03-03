@@ -54,7 +54,7 @@ const MyBookings = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:8080/api/booking/user/my-bookings",
+        "/api/booking/user/my-bookings",
         {
           withCredentials: true,
         }

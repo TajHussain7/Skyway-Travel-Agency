@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -28,15 +29,12 @@ const Offers = () => {
     const fetchOffers = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          "http://localhost:8080/api/package-offers",
-        );
-        const data = await response.json();
+        const response = await axios.get("/api/package-offers");
 
-        if (data.success) {
-          setOffers(data.data);
+        if (response.data.success) {
+          setOffers(response.data.data);
         } else {
-          setError(data.message || "Failed to fetch offers");
+          setError(response.data.message || "Failed to fetch offers");
         }
       } catch (err) {
         console.error("Error fetching offers:", err);
