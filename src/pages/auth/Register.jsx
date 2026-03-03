@@ -4,8 +4,6 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "/api";
-
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -87,7 +85,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        `${API_URL}/auth/register`,
+        "/api/auth/register",
         {
           name: formData.name,
           email: formData.email,
@@ -101,8 +99,18 @@ const Register = () => {
       if (response.data.success) {
         // Store token and user data in localStorage
         const { token, user } = response.data.data;
+        console.log(
+          "🔑 Registration successful, storing token:",
+          token ? "✓" : "✗",
+        );
+        console.log("👤 User data:", user);
+
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
+
+        // Verify token was stored
+        const storedToken = localStorage.getItem("token");
+        console.log("✅ Token stored verification:", storedToken ? "✓" : "✗");
 
         // Redirect based on user role
         setTimeout(() => {

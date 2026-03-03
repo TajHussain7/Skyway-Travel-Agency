@@ -47,15 +47,25 @@ const Login = () => {
       if (response.data.success) {
         // Store token and user data in localStorage
         const { token, user } = response.data.data;
+        console.log("🔑 Login successful, storing token:", token ? "✓" : "✗");
+        console.log("👤 User data:", user);
+
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
 
-        // Redirect based on user role
-        if (user.role === "admin") {
-          navigate("/admin");
-        } else {
-          navigate("/dashboard");
-        }
+        // Verify token was stored
+        const storedToken = localStorage.getItem("token");
+        console.log("✅ Token stored verification:", storedToken ? "✓" : "✗");
+
+        // Small delay to ensure localStorage is written
+        setTimeout(() => {
+          // Redirect based on user role
+          if (user.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
+        }, 100);
       }
     } catch (error) {
       setLoading(false);
