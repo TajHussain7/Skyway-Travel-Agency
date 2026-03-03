@@ -217,7 +217,7 @@ export const sendQueryResponseEmail = async (queryData, adminResponse) => {
     // Validate email configuration
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
       throw new Error(
-        "Email service not configured. EMAIL_USER and EMAIL_PASSWORD must be set in environment variables."
+        "Email service not configured. EMAIL_USER and EMAIL_PASSWORD must be set in environment variables.",
       );
     }
 
@@ -245,8 +245,6 @@ export const sendQueryResponseEmail = async (queryData, adminResponse) => {
     };
   } catch (error) {
     throw new Error(`Failed to send email: ${error.message}`);
-  }
-};
   }
 };
 
